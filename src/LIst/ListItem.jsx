@@ -34,6 +34,7 @@ const ListItem = (props) => {
         <h2 className={styles.title_heading}>{title}</h2>
         <button
           className={styles.modify_button}
+          aria-label="Edit note"
           onClick={() => {
             props.modifyHandle({ state: true, id: props.val.id });
           }}
@@ -42,6 +43,7 @@ const ListItem = (props) => {
         </button>
         <button
           className={styles.delete_button}
+          aria-label="Delete note"
           onClick={() => {
             props.deleteHandle(props.val.id);
           }}

@@ -2,42 +2,45 @@
 .blue,
 .green,
 .orange {
-  margin: 5px;
-  width: 30px;
-  height: 30px;
+  margin: 6px 8px 0 0;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
-  box-shadow: 0 1px 10px #ffffff40;
-  box-shadow: 1px 1px 3px #000000;
+  box-shadow: 0 6px 14px #00000040;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .red:hover,
 .blue:hover,
 .green:hover,
 .orange:hover {
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px #00000050;
 }
 .red {
-  background: rgba(215, 3, 3, 0.536);
-  border: 1px solid rgb(215, 3, 3);
+  background: #f26464;
+  border: 1px solid #f58f8f;
 }
 
 .green {
-  background: rgba(15, 215, 12, 0.379);
-  border: 1px solid rgb(16, 215, 12);
+  background: #63d98b;
+  border: 1px solid #88e4a7;
 }
 
 .blue {
-  background: rgba(36, 2, 203, 0.451);
-  border: 1px solid rgb(36, 2, 203);
+  background: #6692ff;
+  border: 1px solid #8eafff;
 }
 
 .orange {
-  background: hsla(37, 91%, 48%, 0.503);
-  border: 1px solid hsl(37, 91%, 48%);
+  background: #ffad5c;
+  border: 1px solid #ffc588;
 }
 
 .selectedcolor {
-  border: 1px solid white;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 3px #7aa2ff57;
 }

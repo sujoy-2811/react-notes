@@ -1,122 +1,111 @@
 .card {
-  width: 250px;
-  min-height: 200px;
-  max-height: 350px;
-
-  padding: 4px;
-  border: 0px solid hsla(30, 91%, 48%, 0);
+  min-height: 220px;
+  max-height: 360px;
+  padding: 14px 12px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 10px;
-  border-radius: 5px;
-  text-align: center;
-  background-color: hsl(37, 91%, 48%);
+  border-radius: 14px;
+  background-color: #1e2f4a;
   text-overflow: ellipsis;
   position: relative;
-  color: #ffffffd0;
-  border: 1px solid #ffffff50;
+  color: #ecf2ff;
+  border: 1px solid #ffffff2f;
+  box-shadow: 0 10px 20px #0000003d;
 }
 
 .delete_button {
-  background-color: rgb(211, 65, 11);
-  border: none;
-  border: 1px solid #780b0b;
-  border: 1px solid #ffffff50;
-  /* border: 5px solid #111a1a; */
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
+  background-color: #f14f4f;
+  border: 1px solid #ffffff42;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   position: absolute;
-  top: -10%;
-  right: -10%;
-  color: rgb(7, 26, 5);
+  top: 10px;
+  right: 10px;
+  color: #fff;
   user-select: none;
-  font-size: 20px;
+  font-size: 15px;
+  display: grid;
+  place-items: center;
 }
 .delete_button:hover {
   cursor: pointer;
-  transform: scale(1.1);
-  color: #fff;
-  transition: all 0.3s ease-in-out;
+  filter: brightness(1.08);
 }
 
 .modify_button {
-  background-color: rgb(67, 114, 168);
-  border: none;
-  border: 1px solid #122065;
-  border: 1px solid #ffffff50;
-  /* border: 5px solid #111a1a; */
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
+  background-color: #4d82ff;
+  border: 1px solid #ffffff42;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   position: absolute;
-  top: -10%;
-  right: 10%;
-  color: rgb(7, 26, 5);
+  top: 10px;
+  right: 46px;
+  color: #fff;
   user-select: none;
-  font-size: 20px;
+  font-size: 15px;
+  display: grid;
+  place-items: center;
 }
 .modify_button:hover {
   cursor: pointer;
-  transform: scale(1.1);
-  color: #fff;
-  transition: all 0.3s ease-in-out;
+  filter: brightness(1.08);
 }
 .title_and_del_button {
   display: flex;
-  justify-content: center;
-  height: 60px;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 38px;
 }
 
 .title_heading {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 240px;
-  margin-bottom: 0;
+  width: calc(100% - 80px);
+  margin: 0;
+  font-size: 1.07rem;
+  text-align: left;
 }
 
 .note_body {
-  overflow: hidden;
-  min-height: 100px;
-  /* width: 160px;
-  height: 94px; */
-  /* aspect-ratio: 4/3; */
-  border: solid;
-  border-width: 0px;
-  /* vertical-align: middle; */
-  /* line-height: normal; */
-  width: 240px;
+  margin: 10px 0 22px;
+  min-height: 112px;
+  width: 100%;
+  line-height: 1.45;
+  text-align: left;
   overflow: auto;
+  color: #e6ecf8;
 }
 
 hr {
-  border: 1px solid #ffffffd0;
-  width: 158px;
+  border: 0;
+  border-top: 1px solid #ffffff3d;
+  width: 100%;
   padding: 0;
-  margin: 2px 0;
+  margin: 8px 0 0;
 }
 .time_style {
-  color: #ffffff80;
-  font-size: x-small;
-  font-weight: 200;
+  color: #cfdbf5;
+  font-size: 0.7rem;
+  font-weight: 500;
   position: absolute;
-  right: 5%;
-  bottom: 0;
+  left: 12px;
+  bottom: 10px;
 }
 
 .orange {
-  background: hsla(37, 91%, 48%, 0.5);
+  background: linear-gradient(145deg, #5f3f20 0%, #8e5926 100%);
 }
 
 .red {
-  background: rgba(198, 38, 38, 0.5);
+  background: linear-gradient(145deg, #64262d 0%, #8e3440 100%);
 }
 .green {
-  background: rgba(15, 215, 12, 0.5);
+  background: linear-gradient(145deg, #24563c 0%, #2f754f 100%);
 }
 
 .blue {
-  background: rgba(36, 2, 203, 0.5);
+  background: linear-gradient(145deg, #1c346d 0%, #24489a 100%);
 }

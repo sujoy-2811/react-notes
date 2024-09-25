@@ -5,8 +5,7 @@ import "./global.css";
 import InputForm from "./InputForm/InputForm";
 import List from "./LIst/List";
 import styles from "./App.module.css";
-import { noteList, LOCAL_KEY } from "./contants";
-import DemoButton from "./shared/DemoButton";
+import { LOCAL_KEY } from "./contants";
 
 function App() {
   // states
@@ -62,14 +61,6 @@ function App() {
       });
     }
   };
-  const addDemoData = (items) => {
-    console.log(" adding  demo notes start");
-    setData((preData) => {
-      localStorage.setItem(LOCAL_KEY, JSON.stringify([...items, ...preData]));
-      return [...items, ...preData];
-    });
-  };
-
   // use effect
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem(LOCAL_KEY));
@@ -82,27 +73,33 @@ function App() {
   // UI
   return (
     <React.Fragment>
-      {/* header */}
-      <div className={`${styles.z_above} ${styles.head}`}>
-        <h1>React Notes</h1>
+      <div className={styles.app_shell}>
+        <header className={styles.head}>
+          <h1>React Notes</h1>
+          <p className={styles.sub_head}>
+            Capture quick ideas and keep them organized.
+          </p>
+          <span className={styles.note_count}>{data.length} notes</span>
+        </header>
+        <section className={styles.form_and_data}>
+          <aside className={styles.form_col}>
+            <InputForm
+              dataHandler={addData}
+              modifyHandle={modifyHandle}
+              modifyState={modifyState}
+              inputFormData={inputFormData}
+              setInputFormData={setInputFormData}
+            ></InputForm>
+          </aside>
+          <main className={styles.list_col}>
+            <List
+              data={data}
+              deleteHandle={deleteHandle}
+              modifyHandle={modifyHandle}
+            ></List>
+          </main>
+        </section>
       </div>
-      <section className={`${styles.z_above} ${styles.form_and_data}`}>
-        {/* form */}
-        <InputForm
-          dataHandler={addData}
-          modifyHandle={modifyHandle}
-          modifyState={modifyState}
-          inputFormData={inputFormData}
-          setInputFormData={setInputFormData}
-        ></InputForm>
-        {/* list */}
-        <List
-          data={data}
-          deleteHandle={deleteHandle}
-          modifyHandle={modifyHandle}
-        ></List>
-        <DemoButton addNoteHandler={addDemoData} length={data.length} />
-      </section>
     </React.Fragment>
   );
 }

@@ -1,15 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 * {
-  font-family: Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-header {
-  background-color: cadetblue;
-  margin: 0px;
-  z-index: 20;
+  font-family: Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h1 {
-  margin-top: 0px;
-  padding: 0px;
+h1,
+h2,
+h3,
+p {
+  margin: 0;
 }
