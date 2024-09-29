@@ -1,17 +1,17 @@
 .grid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 18px;
   align-items: start;
 }
 
 .empty {
   width: 100%;
-  border: 1px dashed #ffffff40;
-  border-radius: 14px;
+  border: 1px dashed #ccd3df;
+  border-radius: 12px;
   padding: 36px 20px;
   text-align: center;
-  color: #cfd8ea;
-  background: #ffffff05;
+  color: #6d7385;
+  background: #f6f8fc;
 }

@@ -1,52 +1,52 @@
 .form {
   width: 100%;
   margin: 0;
-  padding: 18px;
-  border-radius: 16px;
-  border: 1px solid #ffffff24;
-  background: linear-gradient(160deg, #11243a 0%, #0e1b2e 60%, #0f1726 100%);
-  color: #eef3fb;
-  box-shadow: 0 16px 30px #00000045;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e4e8ef;
+  background: #ffffff;
+  color: #323946;
+  box-shadow: 0 6px 18px #97a3b91c;
 }
 
 .form label {
   display: block;
-  margin-bottom: 6px;
-  font-size: 0.83rem;
+  margin-bottom: 5px;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.28px;
-  color: #d6e2f5;
+  letter-spacing: 0.22px;
+  color: #7a8397;
   text-transform: uppercase;
 }
 
 .form_active {
-  border-color: #7aa2ff80;
-  box-shadow: 0 16px 30px #00000045, 0 0 0 2px #7aa2ff36;
+  border-color: #cfd6e2;
+  box-shadow: 0 6px 18px #97a3b91c, 0 0 0 2px #edf1f7;
 }
 
 .inputs {
   width: 100%;
-  height: 38px;
-  border: 1px solid #ffffff30;
-  border-radius: 10px;
-  background: #f6f9ff0d;
-  color: #f8fbff;
-  font-size: 0.96rem;
+  height: 36px;
+  border: 1px solid #e3e7ef;
+  border-radius: 8px;
+  background: #fbfcfe;
+  color: #2e3340;
+  font-size: 0.92rem;
   padding: 8px 11px;
 }
 
 .inputs:focus {
   outline: none;
-  border-color: #7aa2ff;
-  box-shadow: 0 0 0 2px #7aa2ff2e;
+  border-color: #a5b4cb;
+  box-shadow: 0 0 0 2px #e9eef8;
 }
 
 .input_larger {
-  min-height: 108px;
+  min-height: 88px;
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #7aa2ff #ffffff1f;
+  scrollbar-color: #c1cad8 #eef2f8;
   resize: none;
 }
 
@@ -54,27 +54,27 @@
   width: 6px;
 }
 .input_larger::-webkit-scrollbar-track {
-  background: #ffffff1f;
+  background: #eef2f8;
   border-radius: 8px;
 }
 .input_larger::-webkit-scrollbar-thumb {
-  background-color: #7aa2ff;
+  background-color: #c1cad8;
   border-radius: 8px;
 }
 .input_larger::-webkit-scrollbar-thumb:hover {
-  background-color: #9dbbff;
+  background-color: #a9b5c6;
 }
 
 .add_button {
-  margin-top: 8px;
+  margin-top: 10px;
   width: 100%;
-  height: 44px;
+  height: 38px;
   border: 0;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #5b8dff 0%, #3a6ff0 100%);
+  border-radius: 8px;
+  background: #2f4b8f;
   color: #f7f9ff;
   font-weight: 700;
-  font-size: 0.98rem;
+  font-size: 0.9rem;
   letter-spacing: 0.2px;
   cursor: pointer;
   transition: transform 0.2s ease, filter 0.2s ease;
@@ -88,17 +88,17 @@
 .cancel_button {
   margin-top: 10px;
   width: 100%;
-  height: 38px;
-  border: 1px solid #ffffff3a;
-  border-radius: 10px;
-  background-color: #ffffff10;
-  color: #dfe8f8;
+  height: 34px;
+  border: 1px solid #d8dee9;
+  border-radius: 8px;
+  background-color: #f7f8fb;
+  color: #5f6779;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .cancel_button:hover {
-  background-color: #ffffff1f;
+  background-color: #edf1f7;
 }
 
 .unselectable {

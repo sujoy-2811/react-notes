@@ -1,93 +1,90 @@
 .card {
-  min-height: 220px;
-  max-height: 360px;
+  min-height: 232px;
+  max-height: 380px;
   padding: 14px 12px;
   display: flex;
   flex-direction: column;
-  border-radius: 14px;
-  background-color: #1e2f4a;
+  border-radius: 12px;
+  background-color: #ebedf2;
   text-overflow: ellipsis;
   position: relative;
-  color: #ecf2ff;
-  border: 1px solid #ffffff2f;
-  box-shadow: 0 10px 20px #0000003d;
+  color: #2d3340;
+  border: 1px solid #dfe4ee;
+  box-shadow: 0 7px 20px #9ea8ba33;
 }
 
-.delete_button {
-  background-color: #f14f4f;
-  border: 1px solid #ffffff42;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #fff;
-  user-select: none;
-  font-size: 15px;
-  display: grid;
-  place-items: center;
-}
-.delete_button:hover {
-  cursor: pointer;
-  filter: brightness(1.08);
-}
-
-.modify_button {
-  background-color: #4d82ff;
-  border: 1px solid #ffffff42;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  position: absolute;
-  top: 10px;
-  right: 46px;
-  color: #fff;
-  user-select: none;
-  font-size: 15px;
-  display: grid;
-  place-items: center;
-}
-.modify_button:hover {
-  cursor: pointer;
-  filter: brightness(1.08);
-}
-.title_and_del_button {
+.title_row {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: space-between;
+  align-items: start;
+  gap: 10px;
   min-height: 38px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.action_button {
+  background-color: #ffffffbf;
+  border: 1px solid #cfd5e1;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #41495a;
+  user-select: none;
+  font-size: 15px;
+  display: grid;
+  place-items: center;
+}
+
+.action_button:hover {
+  cursor: pointer;
+  background: #f9fafc;
+}
+
+.danger_button {
+  color: #8d3c44;
+  border-color: #d9b7bc;
+}
+
+.danger_button:hover {
+  background: #f8ecee;
 }
 
 .title_heading {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: calc(100% - 80px);
+  width: 100%;
   margin: 0;
-  font-size: 1.07rem;
+  font-size: 1.35rem;
+  line-height: 1.15;
   text-align: left;
 }
 
 .note_body {
-  margin: 10px 0 22px;
-  min-height: 112px;
+  margin: 12px 0 22px;
+  min-height: 114px;
   width: 100%;
   line-height: 1.45;
   text-align: left;
   overflow: auto;
-  color: #e6ecf8;
+  color: #4f5666;
 }
 
 hr {
   border: 0;
-  border-top: 1px solid #ffffff3d;
+  border-top: 1px solid #cfd6e2;
   width: 100%;
   padding: 0;
   margin: 8px 0 0;
 }
 .time_style {
-  color: #cfdbf5;
+  color: #6e7789;
   font-size: 0.7rem;
   font-weight: 500;
   position: absolute;
@@ -96,16 +93,16 @@ hr {
 }
 
 .orange {
-  background: linear-gradient(145deg, #5f3f20 0%, #8e5926 100%);
+  background: #e7df95;
 }
 
 .red {
-  background: linear-gradient(145deg, #64262d 0%, #8e3440 100%);
+  background: #e9b3b5;
 }
 .green {
-  background: linear-gradient(145deg, #24563c 0%, #2f754f 100%);
+  background: #bde4c6;
 }
 
 .blue {
-  background: linear-gradient(145deg, #1c346d 0%, #24489a 100%);
+  background: #a9d1e8;
 }

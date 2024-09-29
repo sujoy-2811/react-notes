@@ -1,11 +1,31 @@
 import ListItem from "./ListItem";
 import styles from "./List.module.css";
-const List = ({ data, deleteHandle, modifyHandle, modifyState, ...props }) => {
+const List = ({
+  data,
+  currentView,
+  moveToTrashHandle,
+  archiveHandle,
+  restoreHandle,
+  modifyHandle,
+  trashRetentionDays,
+}) => {
+  const getEmptyStateMessage = () => {
+    if (currentView === "archive") {
+      return "No archived notes yet.";
+    }
+
+    if (currentView === "trash") {
+      return `Trash is empty. Trashed notes are removed automatically after ${trashRetentionDays} days.`;
+    }
+
+    return "Create your first note from the left panel.";
+  };
+
   if (data.length === 0) {
     return (
       <div className={styles.empty}>
         <h3>No notes yet</h3>
-        <p>Add your first note or use Demo Notes to get started quickly.</p>
+        <p>{getEmptyStateMessage()}</p>
       </div>
     );
   }
@@ -17,9 +37,11 @@ const List = ({ data, deleteHandle, modifyHandle, modifyState, ...props }) => {
           <ListItem
             key={item.id}
             val={item}
-            deleteHandle={deleteHandle}
+            currentView={currentView}
+            moveToTrashHandle={moveToTrashHandle}
+            archiveHandle={archiveHandle}
+            restoreHandle={restoreHandle}
             modifyHandle={modifyHandle}
-            modifyState={modifyState}
             time={item.time}
           />
         );

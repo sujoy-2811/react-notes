@@ -6,11 +6,48 @@ import InputForm from "./InputForm/InputForm";
 import List from "./LIst/List";
 import styles from "./App.module.css";
 import { LOCAL_KEY } from "./contants";
+import { MdSearch } from "react-icons/md";
+
+const VIEW = {
+  ACTIVE: "active",
+  ARCHIVE: "archive",
+  TRASH: "trash",
+};
+
+const TRASH_RETENTION_DAYS = 30;
+const TRASH_RETENTION_MS = TRASH_RETENTION_DAYS * 24 * 60 * 60 * 1000;
+
+const normalizeNote = (item) => ({
+  ...item,
+  status: item.status || VIEW.ACTIVE,
+  archivedAt: item.archivedAt || null,
+  trashedAt: item.trashedAt || null,
+});
+
+const removeExpiredTrash = (items) =>
+  items.filter((item) => {
+    if (item.status !== VIEW.TRASH || !item.trashedAt) {
+      return true;
+    }
+
+    const trashedTime = new Date(item.trashedAt).getTime();
+    if (Number.isNaN(trashedTime)) {
+      return true;
+    }
+
+    return Date.now() - trashedTime <= TRASH_RETENTION_MS;
+  });
+
+const normalizeAndCleanData = (items = []) =>
+  removeExpiredTrash(items.map(normalizeNote));
 
 function App() {
   // states
   const [data, setData] = useState([]);
   const [modifyState, setModifyState] = useState(false);
+  const [currentView, setCurrentView] = useState(VIEW.ACTIVE);
+  const [searchText, setSearchText] = useState("");
+  const [isInitialized, setIsInitialized] = useState(false);
   const [inputFormData, setInputFormData] = useState({
     id: -1,
     title: "",
@@ -19,12 +56,57 @@ function App() {
   });
 
   // handles
-  const deleteHandle = (val) => {
-    setData((predata) => {
-      const storeData = [...predata.filter((item) => item.id !== val)];
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(storeData));
-      return storeData;
-    });
+  const moveToTrashHandle = (id) => {
+    setModifyState(false);
+    setData((prevData) =>
+      prevData.map((item) => {
+        if (item.id !== id) {
+          return item;
+        }
+
+        return {
+          ...item,
+          status: VIEW.TRASH,
+          trashedAt: new Date().toISOString(),
+          archivedAt: null,
+        };
+      })
+    );
+  };
+
+  const archiveHandle = (id) => {
+    setModifyState(false);
+    setData((prevData) =>
+      prevData.map((item) => {
+        if (item.id !== id) {
+          return item;
+        }
+
+        return {
+          ...item,
+          status: VIEW.ARCHIVE,
+          archivedAt: new Date().toISOString(),
+          trashedAt: null,
+        };
+      })
+    );
+  };
+
+  const restoreHandle = (id) => {
+    setData((prevData) =>
+      prevData.map((item) => {
+        if (item.id !== id) {
+          return item;
+        }
+
+        return {
+          ...item,
+          status: VIEW.ACTIVE,
+          archivedAt: null,
+          trashedAt: null,
+        };
+      })
+    );
   };
 
   const modifyHandle = (val) => {
@@ -38,67 +120,181 @@ function App() {
 
   const addData = (item) => {
     if (item.id === -1) {
-      console.log("new note adding start");
+      setCurrentView(VIEW.ACTIVE);
       item.id = item.title + Math.random().toString(16);
-      console.log("data ", item);
-      setData((preData) => {
-        localStorage.setItem(LOCAL_KEY, JSON.stringify([item, ...preData]));
-        return [item, ...preData];
-      });
-      // console.log("new note adding end");
-      // localStorage.setItem(LOCAL_KEY, JSON.stringify(storeData));
+      setData((prevData) => [
+        {
+          ...item,
+          status: VIEW.ACTIVE,
+          archivedAt: null,
+          trashedAt: null,
+          createdAt: new Date().toISOString(),
+        },
+        ...prevData,
+      ]);
     } else {
-      setData((preData) => {
-        const storeData = preData.map((currItem) => {
+      setData((prevData) => {
+        return prevData.map((currItem) => {
           if (currItem.id === item.id) {
-            return item;
+            return {
+              ...currItem,
+              ...item,
+              status: currItem.status || VIEW.ACTIVE,
+              archivedAt: currItem.archivedAt || null,
+              trashedAt: currItem.trashedAt || null,
+            };
           } else {
             return currItem;
           }
         });
-        localStorage.setItem(LOCAL_KEY, JSON.stringify(storeData));
-        return storeData;
       });
     }
   };
+
+  const filteredData = data
+    .filter((item) => item.status === currentView)
+    .filter((item) => {
+      if (!searchText.trim()) {
+        return true;
+      }
+
+      const query = searchText.toLowerCase();
+      return (
+        (item.title || "").toLowerCase().includes(query) ||
+        (item.note || "").toLowerCase().includes(query)
+      );
+    });
+
+  const getViewTitle = () => {
+    switch (currentView) {
+      case VIEW.ARCHIVE:
+        return "Archive";
+      case VIEW.TRASH:
+        return "Trash";
+      default:
+        return "My Notes";
+    }
+  };
+
+  const getViewMetaText = () => {
+    if (currentView === VIEW.TRASH) {
+      return `Auto-delete after ${TRASH_RETENTION_DAYS} days`;
+    }
+
+    if (currentView === VIEW.ARCHIVE) {
+      return "Restore anytime";
+    }
+
+    return "Today";
+  };
+
   // use effect
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem(LOCAL_KEY));
-    // console.log("🚀 ~ file: App.jsx:67 ~ useEffect ~ storedData:", storedData);
-    if (storedData) {
-      setData(storedData);
+    const storedData = JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]");
+    const cleanedData = normalizeAndCleanData(storedData);
+    if (cleanedData.length !== storedData.length) {
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(cleanedData));
     }
+    setData(cleanedData);
+    setIsInitialized(true);
   }, []);
+
+  useEffect(() => {
+    if (!isInitialized) {
+      return;
+    }
+
+    const cleanedData = removeExpiredTrash(data);
+    if (cleanedData.length !== data.length) {
+      setData(cleanedData);
+      return;
+    }
+
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
+  }, [data, isInitialized]);
 
   // UI
   return (
     <React.Fragment>
       <div className={styles.app_shell}>
-        <header className={styles.head}>
-          <h1>React Notes</h1>
-          <p className={styles.sub_head}>
-            Capture quick ideas and keep them organized.
-          </p>
-          <span className={styles.note_count}>{data.length} notes</span>
-        </header>
-        <section className={styles.form_and_data}>
-          <aside className={styles.form_col}>
-            <InputForm
-              dataHandler={addData}
-              modifyHandle={modifyHandle}
-              modifyState={modifyState}
-              inputFormData={inputFormData}
-              setInputFormData={setInputFormData}
-            ></InputForm>
+        <div className={styles.dashboard}>
+          <aside className={styles.sidebar}>
+            <div className={styles.brand}>React Notes</div>
+            <nav className={styles.menu}>
+              <button
+                className={`${styles.menu_item} ${
+                  currentView === VIEW.ACTIVE ? styles.menu_active : ""
+                }`}
+                onClick={() => setCurrentView(VIEW.ACTIVE)}
+              >
+                Notes
+              </button>
+              <button
+                className={`${styles.menu_item} ${
+                  currentView === VIEW.ARCHIVE ? styles.menu_active : ""
+                }`}
+                onClick={() => setCurrentView(VIEW.ARCHIVE)}
+              >
+                Archive
+              </button>
+              <button
+                className={`${styles.menu_item} ${
+                  currentView === VIEW.TRASH ? styles.menu_active : ""
+                }`}
+                onClick={() => setCurrentView(VIEW.TRASH)}
+              >
+                Trash
+              </button>
+            </nav>
+            <div className={styles.color_dots}>
+              <span className={styles.dot_yellow}></span>
+              <span className={styles.dot_blue}></span>
+              <span className={styles.dot_red}></span>
+            </div>
+            <div className={styles.form_col}>
+              <InputForm
+                dataHandler={addData}
+                modifyHandle={modifyHandle}
+                modifyState={modifyState}
+                inputFormData={inputFormData}
+                setInputFormData={setInputFormData}
+              ></InputForm>
+            </div>
           </aside>
-          <main className={styles.list_col}>
-            <List
-              data={data}
-              deleteHandle={deleteHandle}
-              modifyHandle={modifyHandle}
-            ></List>
-          </main>
-        </section>
+
+          <section className={styles.workspace}>
+            <header className={styles.head}>
+              <h1>NOTES WORKSPACE</h1>
+              <div className={styles.search_wrap}>
+                <MdSearch />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={searchText}
+                  onChange={(event) => setSearchText(event.target.value)}
+                />
+              </div>
+              <span className={styles.note_count}>
+                {filteredData.length} shown
+              </span>
+            </header>
+            <div className={styles.list_col}>
+              <div className={styles.section_head}>
+                <h2>{getViewTitle()}</h2>
+                <p>{getViewMetaText()}</p>
+              </div>
+              <List
+                data={filteredData}
+                currentView={currentView}
+                moveToTrashHandle={moveToTrashHandle}
+                archiveHandle={archiveHandle}
+                restoreHandle={restoreHandle}
+                modifyHandle={modifyHandle}
+                trashRetentionDays={TRASH_RETENTION_DAYS}
+              ></List>
+            </div>
+          </section>
+        </div>
       </div>
     </React.Fragment>
   );
