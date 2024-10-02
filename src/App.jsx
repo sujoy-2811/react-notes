@@ -14,8 +14,14 @@ const VIEW = {
   TRASH: "trash",
 };
 
+const THEME = {
+  LIGHT: "light",
+  DARK: "dark",
+};
+
 const TRASH_RETENTION_DAYS = 30;
 const TRASH_RETENTION_MS = TRASH_RETENTION_DAYS * 24 * 60 * 60 * 1000;
+const THEME_KEY = "my-note-theme";
 
 const normalizeNote = (item) => ({
   ...item,
@@ -48,6 +54,7 @@ function App() {
   const [currentView, setCurrentView] = useState(VIEW.ACTIVE);
   const [searchText, setSearchText] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
+  const [themePreference, setThemePreference] = useState(THEME.LIGHT);
   const [inputFormData, setInputFormData] = useState({
     id: -1,
     title: "",
@@ -190,6 +197,18 @@ function App() {
 
   // use effect
   useEffect(() => {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme === THEME.LIGHT || savedTheme === THEME.DARK) {
+      setThemePreference(savedTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", themePreference);
+    localStorage.setItem(THEME_KEY, themePreference);
+  }, [themePreference]);
+
+  useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]");
     const cleanedData = normalizeAndCleanData(storedData);
     if (cleanedData.length !== storedData.length) {
@@ -246,10 +265,26 @@ function App() {
                 Trash
               </button>
             </nav>
-            <div className={styles.color_dots}>
-              <span className={styles.dot_yellow}></span>
-              <span className={styles.dot_blue}></span>
-              <span className={styles.dot_red}></span>
+            <div className={styles.theme_section}>
+              <p className={styles.theme_title}>Theme</p>
+              <div className={styles.theme_options}>
+                <button
+                  className={`${styles.theme_button} ${
+                    themePreference === THEME.LIGHT ? styles.theme_active : ""
+                  }`}
+                  onClick={() => setThemePreference(THEME.LIGHT)}
+                >
+                  Light
+                </button>
+                <button
+                  className={`${styles.theme_button} ${
+                    themePreference === THEME.DARK ? styles.theme_active : ""
+                  }`}
+                  onClick={() => setThemePreference(THEME.DARK)}
+                >
+                  Dark
+                </button>
+              </div>
             </div>
             <div className={styles.form_col}>
               <InputForm

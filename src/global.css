@@ -2,6 +2,152 @@
   box-sizing: border-box;
 }
 
+:root {
+  color-scheme: light;
+  --page-bg: #e5e7ec;
+  --text-main: #2a2f3a;
+
+  --dashboard-bg: #f8f9fc;
+  --dashboard-border: #dde2ea;
+  --dashboard-shadow: #98a4b729;
+
+  --sidebar-bg: #f2f4f8;
+  --sidebar-border: #e7eaf0;
+  --brand-text: #243c7a;
+  --menu-text: #7f8797;
+  --menu-hover-bg: #f8f9fc;
+  --menu-active-bg: #ffffff;
+  --menu-active-border: #e7ebf2;
+  --menu-active-text: #1f293d;
+
+  --head-bg: #ffffff;
+  --head-border: #e8ebf0;
+  --title-text: #161a22;
+  --search-bg: #f6f7fa;
+  --search-border: #edf0f4;
+  --search-text: #4f596d;
+  --search-icon: #949caf;
+  --pill-bg: #f7f8fb;
+  --pill-border: #e3e7ee;
+  --pill-text: #596175;
+  --section-meta: #8f96a7;
+
+  --theme-title: #6f7789;
+  --theme-btn-bg: #ffffff;
+  --theme-btn-border: #dce2ec;
+  --theme-btn-text: #515a6f;
+  --theme-btn-active-bg: #2f4b8f;
+  --theme-btn-active-border: #2f4b8f;
+  --theme-btn-active-text: #f7f9ff;
+
+  --form-bg: #ffffff;
+  --form-border: #e4e8ef;
+  --form-text: #323946;
+  --form-shadow: #97a3b91c;
+  --form-label: #7a8397;
+  --input-bg: #fbfcfe;
+  --input-border: #e3e7ef;
+  --input-text: #2e3340;
+  --input-focus-border: #a5b4cb;
+  --input-focus-shadow: #e9eef8;
+  --scroll-thumb: #c1cad8;
+  --scroll-track: #eef2f8;
+  --btn-primary-bg: #2f4b8f;
+  --btn-primary-text: #f7f9ff;
+  --btn-secondary-bg: #f7f8fb;
+  --btn-secondary-border: #d8dee9;
+  --btn-secondary-text: #5f6779;
+  --btn-secondary-hover: #edf1f7;
+
+  --empty-bg: #f6f8fc;
+  --empty-border: #ccd3df;
+  --empty-text: #6d7385;
+
+  --action-btn-bg: #ffffffbf;
+  --action-btn-border: #cfd5e1;
+  --action-btn-text: #41495a;
+  --action-btn-hover: #f9fafc;
+  --danger-btn-text: #8d3c44;
+  --danger-btn-border: #d9b7bc;
+  --danger-btn-hover: #f8ecee;
+  --card-note-text: #4f5666;
+  --card-time-text: #6e7789;
+  --card-divider: #cfd6e2;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --page-bg: #131721;
+  --text-main: #e6ebf5;
+
+  --dashboard-bg: #1b2230;
+  --dashboard-border: #2d3648;
+  --dashboard-shadow: #00000066;
+
+  --sidebar-bg: #161d2b;
+  --sidebar-border: #2d3546;
+  --brand-text: #a8c1ff;
+  --menu-text: #a7b1c3;
+  --menu-hover-bg: #222a39;
+  --menu-active-bg: #253047;
+  --menu-active-border: #394966;
+  --menu-active-text: #e9efff;
+
+  --head-bg: #1f2735;
+  --head-border: #313b4f;
+  --title-text: #e8edf8;
+  --search-bg: #262f40;
+  --search-border: #3a465d;
+  --search-text: #d8e0f0;
+  --search-icon: #9eadc4;
+  --pill-bg: #273044;
+  --pill-border: #3a465d;
+  --pill-text: #d5dded;
+  --section-meta: #a5b2c8;
+
+  --theme-title: #a5b1c7;
+  --theme-btn-bg: #263146;
+  --theme-btn-border: #3a4966;
+  --theme-btn-text: #ced8ea;
+  --theme-btn-active-bg: #5c87ff;
+  --theme-btn-active-border: #5c87ff;
+  --theme-btn-active-text: #f5f8ff;
+
+  --form-bg: #232c3d;
+  --form-border: #364259;
+  --form-text: #dce5f4;
+  --form-shadow: #0000004d;
+  --form-label: #a8b5cb;
+  --input-bg: #1a2333;
+  --input-border: #394865;
+  --input-text: #dce5f4;
+  --input-focus-border: #6d8ed8;
+  --input-focus-shadow: #4b618f66;
+  --scroll-thumb: #4d5f81;
+  --scroll-track: #263148;
+  --btn-primary-bg: #5c87ff;
+  --btn-primary-text: #f8fbff;
+  --btn-secondary-bg: #2a344a;
+  --btn-secondary-border: #3c4965;
+  --btn-secondary-text: #c6d0e3;
+  --btn-secondary-hover: #333f57;
+
+  --empty-bg: #212a3a;
+  --empty-border: #3a455f;
+  --empty-text: #b5c0d6;
+
+  --action-btn-bg: #2a3448;
+  --action-btn-border: #3d4a66;
+  --action-btn-text: #d3ddef;
+  --action-btn-hover: #35415a;
+  --danger-btn-text: #f2a9b3;
+  --danger-btn-border: #90505b;
+  --danger-btn-hover: #4a2f36;
+  --card-note-text: #2f3440;
+  --card-time-text: #39404e;
+  --card-divider: #7c8799;
+}
+
 html,
 body,
 #root {
@@ -11,6 +157,6 @@ body,
 body {
   margin: 0;
   min-height: 100vh;
-  background: #e5e7ec;
-  color: #2a2f3a;
+  background: var(--page-bg);
+  color: var(--text-main);
 }

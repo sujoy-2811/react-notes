@@ -8,10 +8,10 @@
 
 .empty {
   width: 100%;
-  border: 1px dashed #ccd3df;
+  border: 1px dashed var(--empty-border);
   border-radius: 12px;
   padding: 36px 20px;
   text-align: center;
-  color: #6d7385;
-  background: #f6f8fc;
+  color: var(--empty-text);
+  background: var(--empty-bg);
 }

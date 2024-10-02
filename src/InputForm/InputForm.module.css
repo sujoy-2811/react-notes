@@ -3,10 +3,10 @@
   margin: 0;
   padding: 14px;
   border-radius: 12px;
-  border: 1px solid #e4e8ef;
-  background: #ffffff;
-  color: #323946;
-  box-shadow: 0 6px 18px #97a3b91c;
+  border: 1px solid var(--form-border);
+  background: var(--form-bg);
+  color: var(--form-text);
+  box-shadow: 0 6px 18px var(--form-shadow);
 }
 
 .form label {
@@ -15,30 +15,30 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.22px;
-  color: #7a8397;
+  color: var(--form-label);
   text-transform: uppercase;
 }
 
 .form_active {
-  border-color: #cfd6e2;
-  box-shadow: 0 6px 18px #97a3b91c, 0 0 0 2px #edf1f7;
+  border-color: var(--input-focus-border);
+  box-shadow: 0 6px 18px var(--form-shadow), 0 0 0 2px var(--input-focus-shadow);
 }
 
 .inputs {
   width: 100%;
   height: 36px;
-  border: 1px solid #e3e7ef;
+  border: 1px solid var(--input-border);
   border-radius: 8px;
-  background: #fbfcfe;
-  color: #2e3340;
+  background: var(--input-bg);
+  color: var(--input-text);
   font-size: 0.92rem;
   padding: 8px 11px;
 }
 
 .inputs:focus {
   outline: none;
-  border-color: #a5b4cb;
-  box-shadow: 0 0 0 2px #e9eef8;
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 2px var(--input-focus-shadow);
 }
 
 .input_larger {
@@ -46,7 +46,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #c1cad8 #eef2f8;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
   resize: none;
 }
 
@@ -54,15 +54,15 @@
   width: 6px;
 }
 .input_larger::-webkit-scrollbar-track {
-  background: #eef2f8;
+  background: var(--scroll-track);
   border-radius: 8px;
 }
 .input_larger::-webkit-scrollbar-thumb {
-  background-color: #c1cad8;
+  background-color: var(--scroll-thumb);
   border-radius: 8px;
 }
 .input_larger::-webkit-scrollbar-thumb:hover {
-  background-color: #a9b5c6;
+  filter: brightness(0.95);
 }
 
 .add_button {
@@ -71,8 +71,8 @@
   height: 38px;
   border: 0;
   border-radius: 8px;
-  background: #2f4b8f;
-  color: #f7f9ff;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
   font-weight: 700;
   font-size: 0.9rem;
   letter-spacing: 0.2px;
@@ -89,16 +89,16 @@
   margin-top: 10px;
   width: 100%;
   height: 34px;
-  border: 1px solid #d8dee9;
+  border: 1px solid var(--btn-secondary-border);
   border-radius: 8px;
-  background-color: #f7f8fb;
-  color: #5f6779;
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .cancel_button:hover {
-  background-color: #edf1f7;
+  background-color: var(--btn-secondary-hover);
 }
 
 .unselectable {

@@ -29,12 +29,12 @@
 }
 
 .action_button {
-  background-color: #ffffffbf;
-  border: 1px solid #cfd5e1;
+  background-color: var(--action-btn-bg);
+  border: 1px solid var(--action-btn-border);
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  color: #41495a;
+  color: var(--action-btn-text);
   user-select: none;
   font-size: 15px;
   display: grid;
@@ -43,16 +43,16 @@
 
 .action_button:hover {
   cursor: pointer;
-  background: #f9fafc;
+  background: var(--action-btn-hover);
 }
 
 .danger_button {
-  color: #8d3c44;
-  border-color: #d9b7bc;
+  color: var(--danger-btn-text);
+  border-color: var(--danger-btn-border);
 }
 
 .danger_button:hover {
-  background: #f8ecee;
+  background: var(--danger-btn-hover);
 }
 
 .title_heading {
@@ -73,18 +73,18 @@
   line-height: 1.45;
   text-align: left;
   overflow: auto;
-  color: #4f5666;
+  color: var(--card-note-text);
 }
 
 hr {
   border: 0;
-  border-top: 1px solid #cfd6e2;
+  border-top: 1px solid var(--card-divider);
   width: 100%;
   padding: 0;
   margin: 8px 0 0;
 }
 .time_style {
-  color: #6e7789;
+  color: var(--card-time-text);
   font-size: 0.7rem;
   font-weight: 500;
   position: absolute;
