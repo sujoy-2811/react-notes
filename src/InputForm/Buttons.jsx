@@ -1,37 +1,36 @@
 import React from "react";
 import styles from "./InputForm.module.css";
 
-function Buttons({ formState: isEdit, modifyHandle }) {
+function Buttons({
+  formState: isEdit,
+  modifyHandle,
+  showCancel,
+  cancelHandler,
+}) {
+  const cancelHandle = () => {
+    if (cancelHandler) {
+      cancelHandler();
+      return;
+    }
+    modifyHandle({ state: false });
+  };
+
   return (
     <>
-      <button
-        className={styles.add_button}
-        // onClick={() => {
-        //   props.modifyHandle({ state: false });
-        // }}
-        type="submit"
-      >
-        {isEdit ? "Edit" : "Add"}
+      <button className={styles.add_button} type="submit">
+        {isEdit ? "Edit" : showCancel ? "Save" : "Add"}
       </button>
-      {isEdit && (
+      {(isEdit || showCancel) && (
         <button
           className={styles.cancel_button}
-          onClick={() => {
-            modifyHandle({ state: false });
-          }}
+          type="button"
+          onClick={cancelHandle}
         >
           Cancel
         </button>
       )}
     </>
   );
-  // default:
-  //   return (
-  //     <button className={styles.add_button} type="submit">
-  //       Add
-  //     </button>
-  //   );
-  // }
 }
 
 export default Buttons;

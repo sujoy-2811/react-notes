@@ -11,6 +11,8 @@ const InputForm = ({
   dataHandler,
   modifyState,
   modifyHandle,
+  showCancel = false,
+  cancelHandler,
   ...props
 }) => {
   // hook
@@ -118,7 +120,12 @@ const InputForm = ({
       <InputColor colHandler={colorHandler} color={color} />
       <br className={styles.unselectable} />
       <br className={styles.unselectable} />
-      <Buttons formState={modifyState} modifyHandle={modifyHandle}></Buttons>
+      <Buttons
+        formState={modifyState}
+        modifyHandle={modifyHandle}
+        showCancel={showCancel}
+        cancelHandler={cancelHandler}
+      ></Buttons>
     </form>
   );
 };

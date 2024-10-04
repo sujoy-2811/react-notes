@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 import "./util/style.css";
 import "./global.css";
@@ -22,6 +23,14 @@ const THEME = {
 const TRASH_RETENTION_DAYS = 30;
 const TRASH_RETENTION_MS = TRASH_RETENTION_DAYS * 24 * 60 * 60 * 1000;
 const THEME_KEY = "my-note-theme";
+const MOBILE_MEDIA_QUERY = "(max-width: 980px)";
+
+const INITIAL_FORM_DATA = {
+  id: -1,
+  title: "",
+  note: "",
+  col: 3,
+};
 
 const normalizeNote = (item) => ({
   ...item,
@@ -54,13 +63,10 @@ function App() {
   const [currentView, setCurrentView] = useState(VIEW.ACTIVE);
   const [searchText, setSearchText] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [themePreference, setThemePreference] = useState(THEME.LIGHT);
-  const [inputFormData, setInputFormData] = useState({
-    id: -1,
-    title: "",
-    note: "",
-    col: 3,
-  });
+  const [inputFormData, setInputFormData] = useState(INITIAL_FORM_DATA);
 
   // handles
   const moveToTrashHandle = (id) => {
@@ -119,10 +125,26 @@ function App() {
   const modifyHandle = (val) => {
     if (val.state) {
       setInputFormData(data.filter((item) => item.id === val.id)[0]);
+      if (isMobile) {
+        setIsFormModalOpen(true);
+      }
     } else {
-      setInputFormData({ id: -1, title: "", note: "", col: 4 });
+      setInputFormData(INITIAL_FORM_DATA);
+      if (isMobile) {
+        setIsFormModalOpen(false);
+      }
     }
     setModifyState(val.state);
+  };
+
+  const openNewNoteModal = () => {
+    setModifyState(false);
+    setInputFormData(INITIAL_FORM_DATA);
+    setIsFormModalOpen(true);
+  };
+
+  const closeFormModal = () => {
+    modifyHandle({ state: false });
   };
 
   const addData = (item) => {
@@ -197,6 +219,20 @@ function App() {
 
   // use effect
   useEffect(() => {
+    const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+    const handleMobileState = () => {
+      setIsMobile(mediaQuery.matches);
+      if (!mediaQuery.matches) {
+        setIsFormModalOpen(false);
+      }
+    };
+
+    handleMobileState();
+    mediaQuery.addEventListener("change", handleMobileState);
+    return () => mediaQuery.removeEventListener("change", handleMobileState);
+  }, []);
+
+  useEffect(() => {
     const savedTheme = localStorage.getItem(THEME_KEY);
     if (savedTheme === THEME.LIGHT || savedTheme === THEME.DARK) {
       setThemePreference(savedTheme);
@@ -233,6 +269,35 @@ function App() {
   }, [data, isInitialized]);
 
   // UI
+  const modalRoot =
+    typeof document !== "undefined"
+      ? document.getElementById("modal-root")
+      : null;
+
+  const mobileFormModal =
+    isMobile &&
+    isFormModalOpen &&
+    modalRoot &&
+    createPortal(
+      <div className={styles.mobile_modal_backdrop}>
+        <div className={styles.mobile_modal}>
+          <div className={styles.mobile_modal_header}>
+            <h3>{modifyState ? "Edit Note" : "New Note"}</h3>
+          </div>
+          <InputForm
+            dataHandler={addData}
+            modifyHandle={modifyHandle}
+            modifyState={modifyState}
+            inputFormData={inputFormData}
+            setInputFormData={setInputFormData}
+            showCancel
+            cancelHandler={closeFormModal}
+          ></InputForm>
+        </div>
+      </div>,
+      modalRoot
+    );
+
   return (
     <React.Fragment>
       <div className={styles.app_shell}>
@@ -287,13 +352,15 @@ function App() {
               </div>
             </div>
             <div className={styles.form_col}>
-              <InputForm
-                dataHandler={addData}
-                modifyHandle={modifyHandle}
-                modifyState={modifyState}
-                inputFormData={inputFormData}
-                setInputFormData={setInputFormData}
-              ></InputForm>
+              {!isMobile && (
+                <InputForm
+                  dataHandler={addData}
+                  modifyHandle={modifyHandle}
+                  modifyState={modifyState}
+                  inputFormData={inputFormData}
+                  setInputFormData={setInputFormData}
+                ></InputForm>
+              )}
             </div>
           </aside>
 
@@ -312,6 +379,14 @@ function App() {
               <span className={styles.note_count}>
                 {filteredData.length} shown
               </span>
+              {isMobile && (
+                <button
+                  className={styles.mobile_new_note_button}
+                  onClick={openNewNoteModal}
+                >
+                  New Note
+                </button>
+              )}
             </header>
             <div className={styles.list_col}>
               <div className={styles.section_head}>
@@ -331,6 +406,8 @@ function App() {
           </section>
         </div>
       </div>
+
+      {mobileFormModal}
     </React.Fragment>
   );
 }
