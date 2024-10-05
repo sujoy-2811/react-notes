@@ -8,6 +8,8 @@ import List from "./LIst/List";
 import styles from "./App.module.css";
 import { LOCAL_KEY } from "./contants";
 import { MdSearch } from "react-icons/md";
+import { MdMenu } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 
 const VIEW = {
   ACTIVE: "active",
@@ -64,9 +66,17 @@ function App() {
   const [searchText, setSearchText] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [themePreference, setThemePreference] = useState(THEME.LIGHT);
   const [inputFormData, setInputFormData] = useState(INITIAL_FORM_DATA);
+
+  const switchView = (view) => {
+    setCurrentView(view);
+    if (isMobile) {
+      setIsSidebarOpen(false);
+    }
+  };
 
   // handles
   const moveToTrashHandle = (id) => {
@@ -224,6 +234,7 @@ function App() {
       setIsMobile(mediaQuery.matches);
       if (!mediaQuery.matches) {
         setIsFormModalOpen(false);
+        setIsSidebarOpen(false);
       }
     };
 
@@ -302,14 +313,18 @@ function App() {
     <React.Fragment>
       <div className={styles.app_shell}>
         <div className={styles.dashboard}>
-          <aside className={styles.sidebar}>
+          <aside
+            className={`${styles.sidebar} ${
+              isMobile && isSidebarOpen ? styles.sidebar_open : ""
+            }`}
+          >
             <div className={styles.brand}>React Notes</div>
             <nav className={styles.menu}>
               <button
                 className={`${styles.menu_item} ${
                   currentView === VIEW.ACTIVE ? styles.menu_active : ""
                 }`}
-                onClick={() => setCurrentView(VIEW.ACTIVE)}
+                onClick={() => switchView(VIEW.ACTIVE)}
               >
                 Notes
               </button>
@@ -317,7 +332,7 @@ function App() {
                 className={`${styles.menu_item} ${
                   currentView === VIEW.ARCHIVE ? styles.menu_active : ""
                 }`}
-                onClick={() => setCurrentView(VIEW.ARCHIVE)}
+                onClick={() => switchView(VIEW.ARCHIVE)}
               >
                 Archive
               </button>
@@ -325,7 +340,7 @@ function App() {
                 className={`${styles.menu_item} ${
                   currentView === VIEW.TRASH ? styles.menu_active : ""
                 }`}
-                onClick={() => setCurrentView(VIEW.TRASH)}
+                onClick={() => switchView(VIEW.TRASH)}
               >
                 Trash
               </button>
@@ -366,6 +381,16 @@ function App() {
 
           <section className={styles.workspace}>
             <header className={styles.head}>
+              {isMobile && (
+                <button
+                  type="button"
+                  className={styles.mobile_menu_button}
+                  aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
+                  onClick={() => setIsSidebarOpen((prevState) => !prevState)}
+                >
+                  {isSidebarOpen ? <MdClose /> : <MdMenu />}
+                </button>
+              )}
               <h1>NOTES WORKSPACE</h1>
               <div className={styles.search_wrap}>
                 <MdSearch />
@@ -406,6 +431,15 @@ function App() {
           </section>
         </div>
       </div>
+
+      {isMobile && isSidebarOpen && (
+        <button
+          type="button"
+          className={styles.mobile_sidebar_overlay}
+          aria-label="Close sidebar"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
       {mobileFormModal}
     </React.Fragment>
