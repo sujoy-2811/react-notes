@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import "./util/style.css";
@@ -10,6 +10,7 @@ import { LOCAL_KEY } from "./contants";
 import { MdSearch } from "react-icons/md";
 import { MdMenu } from "react-icons/md";
 import { MdClose } from "react-icons/md";
+import { MdKeyboardArrowUp } from "react-icons/md";
 
 const VIEW = {
   ACTIVE: "active",
@@ -26,6 +27,7 @@ const TRASH_RETENTION_DAYS = 30;
 const TRASH_RETENTION_MS = TRASH_RETENTION_DAYS * 24 * 60 * 60 * 1000;
 const THEME_KEY = "my-note-theme";
 const MOBILE_MEDIA_QUERY = "(max-width: 980px)";
+const SCROLL_TOP_THRESHOLD = 180;
 
 const INITIAL_FORM_DATA = {
   id: -1,
@@ -68,8 +70,10 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const [themePreference, setThemePreference] = useState(THEME.LIGHT);
   const [inputFormData, setInputFormData] = useState(INITIAL_FORM_DATA);
+  const workspaceRef = useRef(null);
 
   const switchView = (view) => {
     setCurrentView(view);
@@ -155,6 +159,24 @@ function App() {
 
   const closeFormModal = () => {
     modifyHandle({ state: false });
+  };
+
+  const updateScrollTopVisibility = () => {
+    const workspaceScroll = workspaceRef.current?.scrollTop || 0;
+    const pageScroll = window.scrollY || 0;
+    setShowScrollTop(
+      workspaceScroll > SCROLL_TOP_THRESHOLD ||
+        pageScroll > SCROLL_TOP_THRESHOLD
+    );
+  };
+
+  const scrollToTopHandle = () => {
+    if (workspaceRef.current && !isMobile) {
+      workspaceRef.current.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const addData = (item) => {
@@ -279,6 +301,15 @@ function App() {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
   }, [data, isInitialized]);
 
+  useEffect(() => {
+    updateScrollTopVisibility();
+    window.addEventListener("scroll", updateScrollTopVisibility, {
+      passive: true,
+    });
+    return () =>
+      window.removeEventListener("scroll", updateScrollTopVisibility);
+  }, [isMobile]);
+
   // UI
   const modalRoot =
     typeof document !== "undefined"
@@ -379,7 +410,11 @@ function App() {
             </div>
           </aside>
 
-          <section className={styles.workspace}>
+          <section
+            className={styles.workspace}
+            ref={workspaceRef}
+            onScroll={updateScrollTopVisibility}
+          >
             <header className={styles.head}>
               {isMobile && (
                 <button
@@ -439,6 +474,17 @@ function App() {
           aria-label="Close sidebar"
           onClick={() => setIsSidebarOpen(false)}
         />
+      )}
+
+      {showScrollTop && (
+        <button
+          type="button"
+          aria-label="Scroll to top"
+          className={styles.scroll_top_button}
+          onClick={scrollToTopHandle}
+        >
+          <MdKeyboardArrowUp />
+        </button>
       )}
 
       {mobileFormModal}
