@@ -11,6 +11,7 @@ import { MdSearch } from "react-icons/md";
 import { MdMenu } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
 
 const VIEW = {
   ACTIVE: "active",
@@ -439,14 +440,6 @@ function App() {
               <span className={styles.note_count}>
                 {filteredData.length} shown
               </span>
-              {isMobile && (
-                <button
-                  className={styles.mobile_new_note_button}
-                  onClick={openNewNoteModal}
-                >
-                  New Note
-                </button>
-              )}
             </header>
             <div className={styles.list_col}>
               <div className={styles.section_head}>
@@ -484,6 +477,17 @@ function App() {
           onClick={scrollToTopHandle}
         >
           <MdKeyboardArrowUp />
+        </button>
+      )}
+
+      {isMobile && (
+        <button
+          type="button"
+          aria-label="Create new note"
+          className={styles.mobile_new_note_fab}
+          onClick={openNewNoteModal}
+        >
+          <MdAdd />
         </button>
       )}
 

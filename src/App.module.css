@@ -172,11 +172,11 @@
   font-weight: 600;
 }
 
-.mobile_new_note_button {
+.mobile_menu_button {
   display: none;
 }
 
-.mobile_menu_button {
+.mobile_new_note_fab {
   display: none;
 }
 
@@ -245,7 +245,7 @@
 .scroll_top_button {
   position: fixed;
   right: 18px;
-  bottom: 18px;
+  bottom: 66px;
   width: 40px;
   height: 40px;
   border: 1px solid var(--theme-btn-active-border);
@@ -330,17 +330,25 @@
   }
 
   .mobile_new_note_button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 34px;
-    padding: 0 12px;
-    border-radius: 8px;
+    display: none;
+  }
+
+  .mobile_new_note_fab {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
     border: 1px solid var(--theme-btn-active-border);
     background: var(--theme-btn-active-bg);
     color: var(--theme-btn-active-text);
-    font-size: 0.8rem;
-    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    z-index: 31;
+    box-shadow: 0 6px 16px #0000003d;
   }
 }
 
@@ -364,6 +372,11 @@
   }
 
   .scroll_top_button {
+    right: 14px;
+    bottom: 62px;
+  }
+
+  .mobile_new_note_fab {
     right: 14px;
     bottom: 14px;
   }
