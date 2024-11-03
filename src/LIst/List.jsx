@@ -2,6 +2,7 @@ import ListItem from "./ListItem";
 import styles from "./List.module.css";
 const List = ({
   data,
+  isMobile,
   currentView,
   moveToTrashHandle,
   archiveHandle,
@@ -37,6 +38,7 @@ const List = ({
           <ListItem
             key={item.id}
             val={item}
+            isMobile={isMobile}
             currentView={currentView}
             moveToTrashHandle={moveToTrashHandle}
             archiveHandle={archiveHandle}

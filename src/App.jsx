@@ -448,6 +448,7 @@ function App() {
               </div>
               <List
                 data={filteredData}
+                isMobile={isMobile}
                 currentView={currentView}
                 moveToTrashHandle={moveToTrashHandle}
                 archiveHandle={archiveHandle}

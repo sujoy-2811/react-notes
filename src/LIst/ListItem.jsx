@@ -4,6 +4,23 @@ import { MdDelete } from "react-icons/md";
 import { MdArchive } from "react-icons/md";
 import { MdRestore } from "react-icons/md";
 
+const MOBILE_NOTE_WORD_LIMIT = 22;
+const DESKTOP_NOTE_WORD_LIMIT = 42;
+
+const truncateNoteByWords = (text = "", wordLimit = DESKTOP_NOTE_WORD_LIMIT) => {
+  const cleanedText = text.trim();
+  if (!cleanedText) {
+    return cleanedText;
+  }
+
+  const words = cleanedText.split(/\s+/);
+  if (words.length <= wordLimit) {
+    return cleanedText;
+  }
+
+  return `${words.slice(0, wordLimit).join(" ")}...`;
+};
+
 const ListItem = (props) => {
   let color = styles.orange;
 
@@ -23,6 +40,10 @@ const ListItem = (props) => {
 
   let title = props.val.title;
   let note = props.val.note;
+  const noteWordLimit = props.isMobile
+    ? MOBILE_NOTE_WORD_LIMIT
+    : DESKTOP_NOTE_WORD_LIMIT;
+  const displayNote = truncateNoteByWords(note, noteWordLimit);
 
   const actionButtons = [];
 
@@ -117,7 +138,7 @@ const ListItem = (props) => {
         <div className={styles.actions}>{actionButtons}</div>
       </div>
       <hr />
-      <p className={styles.note_body}>{note}</p>
+      <p className={styles.note_body}>{displayNote}</p>
       <span className={styles.time_style}>{props.time}</span>
     </div>
   );
