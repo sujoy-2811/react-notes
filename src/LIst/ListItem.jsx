@@ -57,7 +57,8 @@ const ListItem = (props) => {
     : DESKTOP_NOTE_WORD_LIMIT;
   const displayNote = truncateNoteByWords(note, noteWordLimit);
   const isTitleOverLimit = (title || "").trim().length > titleCharLimit;
-  const isNoteOverLimit = (note || "").trim().split(/\s+/).filter(Boolean).length > noteWordLimit;
+  const isNoteOverLimit =
+    (note || "").trim().split(/\s+/).filter(Boolean).length > noteWordLimit;
   const showDetailsButton = isTitleOverLimit || isNoteOverLimit;
 
   const modalRoot =
@@ -78,7 +79,10 @@ const ListItem = (props) => {
           onClick={(event) => event.stopPropagation()}
         >
           <div className={styles.details_header}>
-            <h3>{title}</h3>
+            <div className={styles.details_heading_block}>
+              <p className={styles.details_label}>Full Note</p>
+              <h3>{title}</h3>
+            </div>
             <button
               type="button"
               className={styles.details_close}
@@ -89,7 +93,16 @@ const ListItem = (props) => {
             </button>
           </div>
           <p className={styles.details_note}>{note}</p>
-          <span className={styles.details_time}>{props.time}</span>
+          <div className={styles.details_footer}>
+            <span className={styles.details_time}>{props.time}</span>
+            <button
+              type="button"
+              className={styles.details_done}
+              onClick={() => setIsDetailsOpen(false)}
+            >
+              Close
+            </button>
+          </div>
         </div>
       </div>,
       modalRoot
