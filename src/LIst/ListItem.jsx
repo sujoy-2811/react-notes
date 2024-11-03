@@ -7,7 +7,10 @@ import { MdRestore } from "react-icons/md";
 const MOBILE_NOTE_WORD_LIMIT = 22;
 const DESKTOP_NOTE_WORD_LIMIT = 42;
 
-const truncateNoteByWords = (text = "", wordLimit = DESKTOP_NOTE_WORD_LIMIT) => {
+const truncateNoteByWords = (
+  text = "",
+  wordLimit = DESKTOP_NOTE_WORD_LIMIT
+) => {
   const cleanedText = text.trim();
   if (!cleanedText) {
     return cleanedText;

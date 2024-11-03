@@ -68,12 +68,25 @@
 
 .note_body {
   margin: 12px 0 22px;
-  min-height: 114px;
   width: 100%;
   line-height: 1.45;
   text-align: left;
-  overflow: auto;
+  min-height: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
   color: var(--card-note-text);
+}
+
+@media (max-width: 980px) {
+  .note_body {
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+  }
 }
 
 hr {
