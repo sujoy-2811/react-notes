@@ -1,11 +1,16 @@
+import { useState } from "react";
+import { createPortal } from "react-dom";
 import styles from "./ListItem.module.css";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { MdArchive } from "react-icons/md";
 import { MdRestore } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 
 const MOBILE_NOTE_WORD_LIMIT = 22;
 const DESKTOP_NOTE_WORD_LIMIT = 42;
+const MOBILE_TITLE_CHAR_LIMIT = 22;
+const DESKTOP_TITLE_CHAR_LIMIT = 30;
 
 const truncateNoteByWords = (
   text = "",
@@ -25,6 +30,7 @@ const truncateNoteByWords = (
 };
 
 const ListItem = (props) => {
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   let color = styles.orange;
 
   switch (props.val.col) {
@@ -43,10 +49,51 @@ const ListItem = (props) => {
 
   let title = props.val.title;
   let note = props.val.note;
+  const titleCharLimit = props.isMobile
+    ? MOBILE_TITLE_CHAR_LIMIT
+    : DESKTOP_TITLE_CHAR_LIMIT;
   const noteWordLimit = props.isMobile
     ? MOBILE_NOTE_WORD_LIMIT
     : DESKTOP_NOTE_WORD_LIMIT;
   const displayNote = truncateNoteByWords(note, noteWordLimit);
+  const isTitleOverLimit = (title || "").trim().length > titleCharLimit;
+  const isNoteOverLimit = (note || "").trim().split(/\s+/).filter(Boolean).length > noteWordLimit;
+  const showDetailsButton = isTitleOverLimit || isNoteOverLimit;
+
+  const modalRoot =
+    typeof document !== "undefined"
+      ? document.getElementById("modal-root")
+      : null;
+
+  const detailsModal =
+    isDetailsOpen &&
+    modalRoot &&
+    createPortal(
+      <div
+        className={styles.details_backdrop}
+        onClick={() => setIsDetailsOpen(false)}
+      >
+        <div
+          className={styles.details_modal}
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className={styles.details_header}>
+            <h3>{title}</h3>
+            <button
+              type="button"
+              className={styles.details_close}
+              aria-label="Close note details"
+              onClick={() => setIsDetailsOpen(false)}
+            >
+              <MdClose />
+            </button>
+          </div>
+          <p className={styles.details_note}>{note}</p>
+          <span className={styles.details_time}>{props.time}</span>
+        </div>
+      </div>,
+      modalRoot
+    );
 
   const actionButtons = [];
 
@@ -142,7 +189,17 @@ const ListItem = (props) => {
       </div>
       <hr />
       <p className={styles.note_body}>{displayNote}</p>
+      {showDetailsButton && (
+        <button
+          type="button"
+          className={styles.details_button}
+          onClick={() => setIsDetailsOpen(true)}
+        >
+          View
+        </button>
+      )}
       <span className={styles.time_style}>{props.time}</span>
+      {detailsModal}
     </div>
   );
 };
