@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { v4 as uuidv4 } from "uuid";
 
 import "./util/style.css";
 import "./global.css";
@@ -165,7 +166,7 @@ function App() {
   const addDemoData = () => {
     const seededNotes = noteList.map((item) => ({
       ...item,
-      id: `${item.id}-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      id: uuidv4(),
       status: VIEW.ACTIVE,
       archivedAt: null,
       trashedAt: null,
@@ -201,10 +202,10 @@ function App() {
   const addData = (item) => {
     if (item.id === -1) {
       setCurrentView(VIEW.ACTIVE);
-      item.id = item.title + Math.random().toString(16);
       setData((prevData) => [
         {
           ...item,
+          id: uuidv4(),
           status: VIEW.ACTIVE,
           archivedAt: null,
           trashedAt: null,
