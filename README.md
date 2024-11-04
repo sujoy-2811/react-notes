@@ -1,70 +1,158 @@
-# Getting Started with Create React App
+# React Notes
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern notes application built with React + Vite, featuring archive/trash flows, mobile-first interactions, local persistence, theme support, and responsive UX patterns.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This project is a single-page notes manager focused on speed and usability:
 
-### `npm start`
+- Create and edit notes with color categories.
+- Archive notes or move them to trash.
+- Restore notes from both archive and trash.
+- Auto-clean trash items older than 30 days.
+- Search notes by title/content inside the active view.
+- Use responsive mobile UX with burger menu and modal note form.
+- Switch between Light and Dark themes.
+- Use floating action buttons for New Note and Scroll to Top on mobile.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React 18
+- Vite 5
+- React Icons
+- CSS Modules
+- LocalStorage (client-side persistence)
 
-### `npm test`
+## Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Key folders/files:
 
-### `npm run build`
+- `src/App.jsx`: app shell, state management, view routing, persistence, responsive logic.
+- `src/InputForm/`: add/edit note form and related controls.
+- `src/LIst/`: list rendering, note cards, card actions, details popup.
+- `src/global.css`: global tokens, theme variables, base layout color system.
+- `index.html`: app mount points (`root` and `modal-root`).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Note Lifecycle
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Active** view for normal notes.
+- **Archive** view for archived notes.
+- **Trash** view for deleted notes.
+- **Restore** from archive/trash back to active.
+- **Auto-delete policy**: trash notes older than 30 days are removed automatically.
 
-### `npm run eject`
+### Editing & Display
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Add and edit notes with title, body, and color selection.
+- Word-limit truncation on cards with ellipsis (`...`) for long note content.
+- Overflow-aware `View` action to open full note details in popup.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Mobile UX
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Off-canvas burger sidebar on mobile.
+- Floating `+` button for creating notes.
+- Modal form (via React Portal) for mobile add/edit.
+- Floating scroll-to-top button.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Theme
 
-## Learn More
+- Light/Dark theme toggle.
+- Theme preference persisted in browser localStorage.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Getting Started
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Prerequisites
 
-### Code Splitting
+- Node.js `>=18.x` (recommended LTS)
+- npm `>=9.x`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Installation
 
-### Analyzing the Bundle Size
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Run in Development
 
-### Making a Progressive Web App
+```bash
+npm run dev
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+By default, Vite runs on:
 
-### Advanced Configuration
+- `http://localhost:5173`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Build for Production
 
-### Deployment
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Build output is generated in:
 
-### `npm run build` fails to minify
+- `dist/`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## Configuration
+
+This project currently runs without required environment variables.
+
+Persisted browser keys used by the app:
+
+- `my-note-list`: notes data.
+- `my-note-theme`: selected theme (`light` or `dark`).
+
+## Architecture Notes
+
+- State is managed in `App.jsx` and passed down as props.
+- Notes are normalized on load and cleaned for expired trash data.
+- Responsive behaviors are controlled through viewport checks plus CSS media queries.
+- Portals are used for modal rendering to avoid layout/z-index conflicts.
+
+## Deployment
+
+The app is a static frontend bundle and can be deployed to any static host:
+
+- Vercel
+- Netlify
+- GitHub Pages
+- Cloudflare Pages
+- S3 + CloudFront
+
+Typical deploy flow:
+
+1. `npm run build`
+2. Upload/publish `dist/`
+
+## Quality & Maintenance
+
+Recommended for production hardening:
+
+- Add unit/integration tests (form submission, lifecycle transitions, cleanup policy).
+- Add E2E tests for mobile modal and sidebar interactions.
+- Add CI pipeline for lint + build validation.
+- Add error boundary and optional telemetry.
+
+## Contribution Guide
+
+1. Create a feature branch.
+2. Make focused changes.
+3. Run `npm run lint` and `npm run build`.
+4. Open PR with screenshots for UI changes.
+
+## License
+
+No license file is currently defined in this repository. Add one if this project is intended for public distribution.
