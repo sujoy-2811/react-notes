@@ -6,7 +6,7 @@ import "./global.css";
 import InputForm from "./InputForm/InputForm";
 import List from "./LIst/List";
 import styles from "./App.module.css";
-import { LOCAL_KEY } from "./contants";
+import { LOCAL_KEY, noteList } from "./contants";
 import { MdSearch } from "react-icons/md";
 import { MdMenu } from "react-icons/md";
 import { MdClose } from "react-icons/md";
@@ -160,6 +160,24 @@ function App() {
 
   const closeFormModal = () => {
     modifyHandle({ state: false });
+  };
+
+  const addDemoData = () => {
+    const seededNotes = noteList.map((item) => ({
+      ...item,
+      id: `${item.id}-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      status: VIEW.ACTIVE,
+      archivedAt: null,
+      trashedAt: null,
+      createdAt: new Date().toISOString(),
+    }));
+
+    setCurrentView(VIEW.ACTIVE);
+    setData((prevData) => [...seededNotes, ...prevData]);
+
+    if (isMobile) {
+      setIsSidebarOpen(false);
+    }
   };
 
   const updateScrollTopVisibility = () => {
@@ -398,6 +416,13 @@ function App() {
                 </button>
               </div>
             </div>
+            <button
+              type="button"
+              className={styles.demo_seed_button}
+              onClick={addDemoData}
+            >
+              Add Demo Notes
+            </button>
             <div className={styles.form_col}>
               {!isMobile && (
                 <InputForm
