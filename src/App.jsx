@@ -138,6 +138,18 @@ function App() {
     );
   };
 
+  const permanentDeleteHandle = (id) => {
+    setModifyState(false);
+    setData((prevData) => prevData.filter((item) => item.id !== id));
+  };
+
+  const emptyTrashHandle = () => {
+    setModifyState(false);
+    setData((prevData) =>
+      prevData.filter((item) => item.status !== VIEW.TRASH)
+    );
+  };
+
   const modifyHandle = (val) => {
     if (val.state) {
       setInputFormData(data.filter((item) => item.id === val.id)[0]);
@@ -245,6 +257,10 @@ function App() {
         (item.note || "").toLowerCase().includes(query)
       );
     });
+
+  const trashNoteCount = data.filter(
+    (item) => item.status === VIEW.TRASH
+  ).length;
 
   const getViewTitle = () => {
     switch (currentView) {
@@ -470,7 +486,19 @@ function App() {
             <div className={styles.list_col}>
               <div className={styles.section_head}>
                 <h2>{getViewTitle()}</h2>
-                <p>{getViewMetaText()}</p>
+                <div className={styles.section_head_actions}>
+                  <p>{getViewMetaText()}</p>
+                  {currentView === VIEW.TRASH && (
+                    <button
+                      type="button"
+                      className={styles.empty_trash_button}
+                      onClick={emptyTrashHandle}
+                      disabled={trashNoteCount === 0}
+                    >
+                      Empty Trash
+                    </button>
+                  )}
+                </div>
               </div>
               <List
                 data={filteredData}
@@ -479,6 +507,7 @@ function App() {
                 moveToTrashHandle={moveToTrashHandle}
                 archiveHandle={archiveHandle}
                 restoreHandle={restoreHandle}
+                permanentDeleteHandle={permanentDeleteHandle}
                 modifyHandle={modifyHandle}
                 trashRetentionDays={TRASH_RETENTION_DAYS}
               ></List>

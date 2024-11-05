@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import styles from "./ListItem.module.css";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 import { MdArchive } from "react-icons/md";
 import { MdRestore } from "react-icons/md";
 import { MdClose } from "react-icons/md";
@@ -140,13 +142,14 @@ const ListItem = (props) => {
     actionButtons.push(
       <button
         key="trash"
-        className={`${styles.action_button} ${styles.danger_button}`}
+        className={`${styles.action_button} ${styles.move_trash_button}`}
         aria-label="Move note to trash"
+        title="Move to trash"
         onClick={() => {
           props.moveToTrashHandle(props.val.id);
         }}
       >
-        <MdDelete />
+        <MdDeleteOutline />
       </button>
     );
   }
@@ -168,13 +171,14 @@ const ListItem = (props) => {
     actionButtons.push(
       <button
         key="archive-trash"
-        className={`${styles.action_button} ${styles.danger_button}`}
+        className={`${styles.action_button} ${styles.move_trash_button}`}
         aria-label="Move archived note to trash"
+        title="Move to trash"
         onClick={() => {
           props.moveToTrashHandle(props.val.id);
         }}
       >
-        <MdDelete />
+        <MdDeleteOutline />
       </button>
     );
   }
@@ -190,6 +194,20 @@ const ListItem = (props) => {
         }}
       >
         <MdRestore />
+      </button>
+    );
+
+    actionButtons.push(
+      <button
+        key="trash-delete"
+        className={`${styles.action_button} ${styles.danger_button} ${styles.permanent_button}`}
+        aria-label="Delete note permanently"
+        title="Delete permanently"
+        onClick={() => {
+          props.permanentDeleteHandle(props.val.id);
+        }}
+      >
+        <MdDeleteForever />
       </button>
     );
   }

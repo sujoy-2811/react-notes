@@ -7,6 +7,7 @@ const List = ({
   moveToTrashHandle,
   archiveHandle,
   restoreHandle,
+  permanentDeleteHandle,
   modifyHandle,
   trashRetentionDays,
 }) => {
@@ -43,6 +44,7 @@ const List = ({
             moveToTrashHandle={moveToTrashHandle}
             archiveHandle={archiveHandle}
             restoreHandle={restoreHandle}
+            permanentDeleteHandle={permanentDeleteHandle}
             modifyHandle={modifyHandle}
             time={item.time}
           />

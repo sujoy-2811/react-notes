@@ -221,6 +221,33 @@
   font-size: 0.9rem;
 }
 
+.section_head_actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.empty_trash_button {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--danger-btn-border);
+  background: var(--danger-btn-hover);
+  color: var(--danger-btn-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.empty_trash_button:hover:not(:disabled) {
+  filter: brightness(1.02);
+}
+
+.empty_trash_button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .mobile_modal_backdrop {
   position: fixed;
   inset: 0;
@@ -391,6 +418,16 @@
 
   .section_head h2 {
     font-size: 1.5rem;
+  }
+
+  .section_head {
+    align-items: flex-start;
+  }
+
+  .section_head_actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
   }
 
   .scroll_top_button {

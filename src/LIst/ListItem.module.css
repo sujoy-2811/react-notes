@@ -55,6 +55,20 @@
   background: var(--danger-btn-hover);
 }
 
+.move_trash_button {
+  color: var(--theme-btn-text);
+  border-color: var(--theme-btn-border);
+  background: var(--theme-btn-bg);
+}
+
+.move_trash_button:hover {
+  background: var(--action-btn-hover);
+}
+
+.permanent_button {
+  background: var(--danger-btn-hover);
+}
+
 .title_heading {
   white-space: nowrap;
   overflow: hidden;
