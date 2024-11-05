@@ -8,8 +8,11 @@ This project is a single-page notes manager focused on speed and usability:
 
 - Create and edit notes with color categories.
 - Archive notes or move them to trash.
+- Permanently delete trashed notes individually.
+- Empty all trashed notes with one action.
 - Restore notes from both archive and trash.
 - Auto-clean trash items older than 30 days.
+- Add demo notes from the sidebar.
 - Search notes by title/content inside the active view.
 - Use responsive mobile UX with burger menu and modal note form.
 - Switch between Light and Dark themes.
@@ -20,6 +23,7 @@ This project is a single-page notes manager focused on speed and usability:
 - React 18
 - Vite 5
 - React Icons
+- uuid
 - CSS Modules
 - LocalStorage (client-side persistence)
 
@@ -41,13 +45,20 @@ Key folders/files:
 - **Archive** view for archived notes.
 - **Trash** view for deleted notes.
 - **Restore** from archive/trash back to active.
+- **Permanent delete (single)** for a note inside trash.
+- **Empty Trash (bulk)** action to remove all trashed notes.
 - **Auto-delete policy**: trash notes older than 30 days are removed automatically.
 
 ### Editing & Display
 
 - Add and edit notes with title, body, and color selection.
+- IDs for new notes and demo notes are generated via UUID.
 - Word-limit truncation on cards with ellipsis (`...`) for long note content.
 - Overflow-aware `View` action to open full note details in popup.
+
+### Data Utilities
+
+- Sidebar action to seed demo/fake notes for quick testing.
 
 ### Mobile UX
 
